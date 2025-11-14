@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.js">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+
+
+<header class="header">
+  <div class="header__logo">MiniProfile</div>
+
+  <nav class="header__nav">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="profile">
+
+    <form id="profileForm" class="card form">
+      <h2 class="form__title">Profile Form</h2>
+
+      <div class="form__row">
+        <label for="fullName">Ismingiz</label>
+        <input id="fullName" type="text" placeholder="muslima" required />
+      </div>
+
+      <div class="form__row">
+        <label for="birthYear">Tug'ilgan yil</label>
+        <input id="birthYear" type="number" placeholder="2010" required />
+      </div>
+
+      <div class="form__row">
+        <label for="ageInput">Yosh</label>
+        <input id="ageInput" type="text" placeholder="Yoshingiz" />
+      </div>
+
+      <div class="form__row">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="name@example.com" required />
+      </div>
+
+      <div class="form__row">
+        <label for="hobby">Hobby</label>
+        <input id="hobby" type="text" placeholder="reading, dancing, music" />
+      </div>
+
+      <div class="form__actions">
+        <button type="button" class="btn btn--ghost">Clear</button>
+        <button type="button" class="btn btn--primary">Save Profile</button>
+      </div>
+    </form>
+
+    <aside class="card result">
+      <h3 class="result__title">Profile Result</h3>
+      <p class="muted">Formni to'ldirib "Save Profile" tugmasini bosing.</p>
+    </aside>
+
+  </section>
+</main>
+
+<footer class="footer">
+  <small>MiniProfile  <span id="footerYear"></span></small>
+</footer>
+
+
+
+</body>
+</html>
