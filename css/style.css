@@ -110,7 +110,6 @@ body {
 }
 .btn--primary:hover {
   background: #000;
-  transform: translateY(-2px);
 }
 
 .result {
