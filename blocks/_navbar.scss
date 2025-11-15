@@ -1,10 +1,8 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 
 body {
   font-family: Arial, sans-serif;
@@ -33,6 +31,7 @@ body {
       text-decoration: none;
       color: #444;
       font-size: 15px;
+      transition: 0.25s ease;
 
       &:hover {
         color: #000;
@@ -40,6 +39,7 @@ body {
     }
   }
 }
+
 
 
 .container {
@@ -59,7 +59,13 @@ body {
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  }
 }
+
 
 
 .form {
@@ -84,10 +90,13 @@ body {
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
+      font-size: 15px;
+      transition: 0.25s ease;
 
       &:focus {
         outline: none;
         border-color: #333;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
       }
     }
   }
@@ -100,16 +109,19 @@ body {
 }
 
 
+
 .btn {
   padding: 10px 18px;
   border-radius: 8px;
   border: none;
+  transition: 0.25s ease;
 
   &--ghost {
     background: #e7e7e7;
 
     &:hover {
       background: #dcdcdc;
+      transform: translateY(-2px);
     }
   }
 
@@ -119,9 +131,11 @@ body {
 
     &:hover {
       background: #000;
+      transform: translateY(-2px);
     }
   }
 }
+
 
 
 .result {
@@ -144,4 +158,26 @@ body {
   margin-top: 40px;
   font-size: 14px;
   color: #555;
+}
+
+
+
+@media (max-width: 375px) {
+
+  .profile {
+    flex-direction: column;
+  }
+
+  .result {
+    width: 100%;
+  }
+
+  .form__actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
 }

@@ -1,63 +1,127 @@
-const fullName = document.getElementById("fullName");
-const birthYear = document.getElementById("birthYear");
-const ageInput = document.getElementById("ageInput");
-const email = document.getElementById("email");
-const hobby = document.getElementById("hobby");
-
-const saveBtn = document.getElementById("saveBtn");
-const clearBtn = document.getElementById("clearBtn");
-
-const resultContent = document.querySelector(".muted");
-
-document.getElementById("footerYear").textContent = new Date().getFullYear();
+function calculateAge(birthYear) {
+  const year = Number(birthYear); 
+  const currentYear = new Date().getFullYear();
+  return currentYear - year;
+}
 
 
+function normalizeName(name) {
+  const trimmed = name.trim(); 
+  const lower = trimmed.toLowerCase(); 
 
-birthYear.addEventListener("input", function () {
-  let year = Number(birthYear.value);
-  let now = new Date().getFullYear();
+  return lower.charAt(0).toUpperCase() + lower.slice(1); 
+}
 
-  if (year > 1900 && year <= now) {
-    ageInput.value = now - year;
-  } else {
-    ageInput.value = "";
-  }
-});
+
+function validateEmail(email) {
+  return email.includes("@") && email.includes(".");
+}
+
+
+const fullNameInput = document.querySelector("#fullName");
+const birthYearInput = document.querySelector("#birthYear");
+const ageInput = document.querySelector("#ageInput");
+const emailInput = document.querySelector("#email");
+const hobbyInput = document.querySelector("#hobby");
+const resultBox = document.querySelector(".result");
+const resultTitle = document.querySelector(".result__title");
+const clearBtn = document.querySelector(".btn--ghost");
+const saveBtn = document.querySelector(".btn--primary");
+
+
+document.querySelector("#footerYear").textContent = new Date().getFullYear();
+
 
 
 
 saveBtn.addEventListener("click", function () {
-  if (fullName.value === "" || birthYear.value === "" || email.value === "") {
-    alert("Iltimos, asosiy maydonlarni toldiring!");
+  let name = fullNameInput.value;
+  let birthYear = birthYearInput.value;
+  let email = emailInput.value;
+  let hobby = hobbyInput.value;
+
+
+  name = name.trimEnd().trimStart();
+  hobby = hobby.trim();
+
+
+  if (!validateEmail(email)) {
+    resultBox.innerHTML = `<p style="color:red;"> Email notogri! @ belgisi kiritilganligini tekshiring.</p>`;
     return;
   }
 
-  resultContent.innerHTML = `
-    <p><strong>Ism:</strong> ${fullName.value}</p>
-    <p><strong>Tug‘ilgan yil:</strong> ${birthYear.value}</p>
-    <p><strong>Yosh:</strong> ${ageInput.value}</p>
-    <p><strong>Email:</strong> ${email.value}</p>
-    <p><strong>Hobby:</strong> ${hobby.value || "Korsatilmagan"}</p>
+
+  const age = calculateAge(birthYear);
+  ageInput.value = age;
+
+
+  const finalName = normalizeName(name);
+
+
+  const hobbyFormatted = hobby.replaceAll(",", ", "); 
+
+ 
+  resultBox.style.borderColor = "#6366f1";
+  resultTitle.textContent = "✔ Profil yaratildi";
+
+
+  resultBox.innerHTML = `
+    <h3 class="result__title">Profile Result</h3>
+    <p><strong>Ism:</strong> ${finalName}</p>
+    <p><strong>Yosh:</strong> ${age}</p>
+    <p><strong>Email:</strong> ${email.toLowerCase()}</p>
+    <p><strong>Hobby:</strong> ${hobbyFormatted}</p>
   `;
 
-  console.log("=== Profile Ma'lumotlari ===");
-  console.log("Ism:", fullName.value);
-  console.log("Tug'ilgan yil:", birthYear.value);
-  console.log("Yosh:", ageInput.value);
-  console.log("Email:", email.value);
-  console.log("Hobby:", hobby.value || "Korsatilmagan");
+
+  const profile = {
+    name: finalName,
+    birthYear: Number(birthYear),
+    age: age,
+    email: email,
+    hobby: hobby
+  };
+
+  localStorage.setItem("profile", JSON.stringify(profile));
 });
 
 
 
 clearBtn.addEventListener("click", function () {
-  fullName.value = "";
-  birthYear.value = "";
+  fullNameInput.value = "";
+  birthYearInput.value = "";
   ageInput.value = "";
-  email.value = "";
-  hobby.value = "";
+  emailInput.value = "";
+  hobbyInput.value = "";
 
-  resultContent.innerHTML = `Formni toldirib "Save Profile" tugmasini bosing.`;
+  resultBox.innerHTML = `
+    <h3 class="result__title">Profile Result</h3>
+    <p class="muted">Formni to'ldirib "Save Profile" tugmasini bosing.</p>
+  `;
 
-  console.log("Form tozalandi!");
+
+  resultBox.classList.remove("error");
+});
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("profile");
+
+  if (saved) {
+    const p = JSON.parse(saved);
+
+    fullNameInput.value = p.name;
+    birthYearInput.value = p.birthYear;
+    ageInput.value = p.age;
+    emailInput.value = p.email;
+    hobbyInput.value = p.hobby;
+
+    resultBox.innerHTML = `
+      <h3 class="result__title">Saqlangan profil</h3>
+      <p><strong>Ism:</strong> ${p.name}</p>
+      <p><strong>Yosh:</strong> ${p.age}</p>
+      <p><strong>Email:</strong> ${p.email}</p>
+      <p><strong>Hobby:</strong> ${p.hobby}</p>
+    `;
+  }
 });
